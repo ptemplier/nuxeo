@@ -38,6 +38,7 @@ import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.jar.Attributes;
 import java.util.jar.JarFile;
@@ -48,8 +49,11 @@ import org.apache.commons.logging.LogFactory;
 import org.browsermob.proxy.ProxyServer;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+import org.junit.After;
 import org.junit.Rule;
 import org.junit.rules.MethodRule;
+import org.nuxeo.functionaltests.pages.search.DefaultSearchSubPage;
+import org.nuxeo.functionaltests.pages.search.SearchPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
@@ -910,6 +914,21 @@ public abstract class AbstractTest {
                 noteContent);
 
         return notePage;
+    }
+
+    @After
+    public void checkAggregates() throws UserNotConnectedException {
+        if (driver != null) {
+            logout();
+            DocumentBasePage documentBasePage = login();
+            SearchPage searchPage = documentBasePage.goToSearchPage();
+            DefaultSearchSubPage searchLayoutSubPage = searchPage.getDefaultSearch();
+
+            // Test aggregates
+            Map<String, Integer> coverageAgg = searchLayoutSubPage.getAvailableCoverageAggregate();
+            assertEquals(0, coverageAgg.size());
+            logout();
+        }
     }
 
 }

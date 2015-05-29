@@ -39,6 +39,7 @@ import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.jar.Attributes;
 import java.util.jar.JarFile;
@@ -68,6 +69,8 @@ import org.nuxeo.functionaltests.pages.forms.DublinCoreCreationDocumentFormPage;
 import org.nuxeo.functionaltests.pages.forms.FileCreationFormPage;
 import org.nuxeo.functionaltests.pages.forms.NoteCreationFormPage;
 import org.nuxeo.functionaltests.pages.forms.WorkspaceFormPage;
+import org.nuxeo.functionaltests.pages.search.DefaultSearchSubPage;
+import org.nuxeo.functionaltests.pages.search.SearchPage;
 import org.nuxeo.functionaltests.pages.tabs.CollectionContentTabSubPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -930,6 +933,21 @@ public abstract class AbstractTest {
                 noteContent);
 
         return notePage;
+    }
+
+    @After
+    public void checkAggregates() throws UserNotConnectedException {
+        if (driver != null) {
+            logout();
+            DocumentBasePage documentBasePage = login();
+            SearchPage searchPage = documentBasePage.goToSearchPage();
+            DefaultSearchSubPage searchLayoutSubPage = searchPage.getDefaultSearch();
+
+            // Test aggregates
+            Map<String, Integer> coverageAgg = searchLayoutSubPage.getAvailableCoverageAggregate();
+            assertEquals(0, coverageAgg.size());
+            logout();
+        }
     }
 
 }

@@ -976,7 +976,7 @@ public class SQLSession implements Session {
             if (user == null) {
                 user = aclrow.group;
             }
-            acl.add(new ACE(user, aclrow.permission, aclrow.grant));
+            acl.add(new ACE(user, aclrow.permission, aclrow.grant, aclrow.creator, aclrow.begin, aclrow.end));
         }
         if (acl != null) {
             acp.addACL(acl);
@@ -1033,7 +1033,7 @@ public class SQLSession implements Session {
             if (!aceKeys.contains(getACLrowKey(aclrow))) {
                 // no match, keep the aclrow info instead of the ace
                 newaclrows.add(new ACLRow(newaclrows.size(), name, aclrow.grant, aclrow.permission, aclrow.user,
-                        aclrow.group));
+                        aclrow.group, aclrow.creator, aclrow.begin, aclrow.end));
             }
         }
         // finish remaining aces for last acl done
@@ -1075,7 +1075,7 @@ public class SQLSession implements Session {
             return;
         }
         String group = null; // XXX all in user for now
-        aclrows.add(new ACLRow(aclrows.size(), name, ace.isGranted(), ace.getPermission(), user, group));
+        aclrows.add(new ACLRow(aclrows.size(), name, ace.isGranted(), ace.getPermission(), user, group, ace.getCreator(), ace.getBegin(), ace.getEnd()));
     }
 
     protected ACL getInheritedACLs(Document doc) throws DocumentException {

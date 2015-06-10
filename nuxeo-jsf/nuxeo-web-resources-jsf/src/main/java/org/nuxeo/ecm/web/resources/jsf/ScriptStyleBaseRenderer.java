@@ -157,34 +157,8 @@ public abstract class ScriptStyleBaseRenderer extends Renderer implements Compon
 
     @Override
     public final void encodeChildren(FacesContext context, UIComponent component) throws IOException {
-        Map<String, Object> attributes = component.getAttributes();
-
-        String name = (String) attributes.get("name");
         int childCount = component.getChildCount();
         boolean renderChildren = (0 < childCount);
-
-        // If we have no "name" attribute...
-        if (null == name) {
-            // and no child content...
-            if (0 == childCount) {
-                // this is user error, so put up a message if desired
-                if (context.isProjectStage(ProjectStage.Development)) {
-                    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN,
-                            "outputScript with no library, no name, and no body content", "Is body content intended?");
-                    context.addMessage(component.getClientId(context), message);
-                }
-                // We have no children, but don't bother with the method
-                // invocation anyway.
-                renderChildren = false;
-            }
-        } else if (0 < childCount) {
-            // If we have a "name" and also have child content, ignore
-            // the child content and log a message.
-            if (logger.isLoggable(Level.INFO)) {
-                logger.info("outputScript with \"name\" attribute and nested content.  Ignoring nested content.");
-            }
-            renderChildren = false;
-        }
         if (renderChildren) {
             ResponseWriter writer = context.getResponseWriter();
             startElement(writer, component);

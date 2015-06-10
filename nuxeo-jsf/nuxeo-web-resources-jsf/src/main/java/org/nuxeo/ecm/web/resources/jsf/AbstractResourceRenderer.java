@@ -34,7 +34,6 @@ import org.nuxeo.runtime.api.Framework;
 
 import com.sun.faces.config.WebConfiguration;
 import com.sun.faces.renderkit.html_basic.HtmlBasicRenderer.Param;
-import com.sun.faces.renderkit.html_basic.ScriptStyleBaseRenderer;
 
 /**
  * Base class for web resources resolution, factoring out helper methods for resources retrieval.

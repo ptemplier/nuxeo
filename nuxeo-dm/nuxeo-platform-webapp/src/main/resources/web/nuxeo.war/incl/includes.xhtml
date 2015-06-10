@@ -4,11 +4,10 @@
  xmlns:c="http://java.sun.com/jstl/core">
 
 <h:outputScript name="js/fixviewstate.js" target="head" />
-
-<script type="text/javascript"
+<script defer="defer" type="text/javascript"
   src="#{baseURL}seam/resource/remoting/interface.js?#{SeamRemotingBeanNames}">
 </script>
-<script type="text/javascript">
+<script type="text/javascript" defer="defer">
   var currentConversationId = '#{nxu:javaScriptEscape(nxu:htmlEscape(org.jboss.seam.core.manager.currentConversationId))}';
   var currentDocURL = '#{currentServerLocation.name}/#{currentDocument.id}';
   var currentDocumentPath = '#{nxu:javaScriptEscape(currentDocument.pathAsString)}';

@@ -7,7 +7,6 @@
   xmlns:nxu="http://nuxeo.org/nxweb/util">
 
   <nxu:set var="page" value="#{themeStylingService.getPage(name)}">
-    <ui:include src="/incl/jsf_resources.xhtml" />
     <c:if test="#{page != null}">
       <nxr:meta charset="#{page.charset}" />
       <c:forEach var="fav" items="#{page.favicons}">
@@ -16,13 +15,13 @@
       <ui:remove>
         Include JSF resources coming from ui-web here as first dependencies
       </ui:remove>
+      <ui:include src="/incl/jsf_resources.xhtml" />
       <c:forEach var="bundle" items="#{page.resourceBundles}">
         <nxr:resourceBundle name="#{bundle}" target="head">
           <f:param name="flavor" value="#{empty flavor? 'default': flavor}" />
         </nxr:resourceBundle>
       </c:forEach>
     </c:if>
-    <ui:include src="/incl/includes.xhtml" />
   </nxu:set>
 
 </ui:composition>

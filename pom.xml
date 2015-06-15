@@ -721,6 +721,11 @@
         <artifactId>nuxeo-invite</artifactId>
         <version>${nuxeo.services.version}</version>
       </dependency>
+      <dependency>
+        <groupId>org.nuxeo.ecm.platform</groupId>
+        <artifactId>nuxeo-permissions</artifactId>
+        <version>${nuxeo.services.version}</version>
+      </dependency>
 
       <!-- Nuxeo Theme -->
       <dependency>
